@@ -108,9 +108,9 @@ body {
     </div>
     <ul>
         <li><a href="studentviewallcourse">view course</a></li>
-        <li>Registered Courses</li>
+        <li><a href="registeredcourses">Registered Courses</a></li>
         <li><a href="editprofile.jsp">Edit Profile</a></li>
-        <li>Feedback</li>
+        <li><a href="feedback.jsp">Feedback Form</a></li>
     </ul>
    <div class="navbar1">
       <div >Welcome, <span><%=c.getName() %></span></div>

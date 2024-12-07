@@ -114,8 +114,8 @@
                 <td><c:out value="${course.code}"></c:out></td>
                 <td><c:out value="${course.description}"></c:out></td>
                 <td>
-                    <button class="action-btn btn-edit" onclick="location.href='editCourseForm.jsp?id=${course.id}'">Edit</button>
-                    <button class="action-btn btn-delete" onclick="if(confirm('Are you sure?')) location.href='deleteCourse?id=${course.id}'">Delete</button>
+                    <button class="action-btn btn-edit" onclick="location.href='updatecourse/${course.id}'">Edit</button>
+                    <button class="action-btn btn-delete" onclick="if(confirm('Are you sure?')) location.href='deletecourse' ">Delete</button>
                 </td>
             </tr>
         </c:forEach>

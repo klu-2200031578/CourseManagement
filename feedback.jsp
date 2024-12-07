@@ -47,14 +47,34 @@
             resize: vertical;
         }
 
-        .rating-options {
+        .rating-container {
             display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 10px;
         }
 
-        .rating-options input {
-            margin-right: 5px;
+        .star {
+            font-size: 40px;
+            color: #ccc;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+            transform: scale(1.2);
+        }
+
+        .star:hover {
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
         .btn-submit {
@@ -72,11 +92,26 @@
         .btn-submit:hover {
             opacity: 0.9;
         }
+
+        /* Lottie container */
+        .lottie-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        /* Center content */
+        .center-content {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
+<!-- Lottie Animation -->
+
 <div class="feedback-container">
+
     <h3>Feedback Form</h3>
     <form action="submitFeedback" method="post">
         <!-- User Details -->
@@ -99,12 +134,12 @@
 
         <!-- Course Content Feedback -->
         <label for="contentRating">Rate the course content:</label>
-        <div class="rating-options">
-            <label><input type="radio" name="contentRating" value="1" required> 1</label>
-            <label><input type="radio" name="contentRating" value="2"> 2</label>
-            <label><input type="radio" name="contentRating" value="3"> 3</label>
-            <label><input type="radio" name="contentRating" value="4"> 4</label>
-            <label><input type="radio" name="contentRating" value="5"> 5</label>
+        <div class="rating-container" id="rating-container">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
         </div>
 
         <!-- Open Feedback -->
@@ -115,6 +150,61 @@
         <button type="submit" class="btn-submit">Submit Feedback</button>
     </form>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.11/bodymovin.min.js"></script>
+
+<script>
+    // Load Lottie animation
+    const animationData = {
+        container: document.getElementById('lottie-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'https://assets1.lottiefiles.com/packages/lf20_9abx3buj.json' // Replace with your Lottie file URL
+    };
+    bodymovin.loadAnimation(animationData);
+
+    // Star rating functionality
+    const stars = document.querySelectorAll('.star');
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+            const value = star.getAttribute('data-value');
+            highlightStars(value);
+        });
+
+        star.addEventListener('mouseout', () => {
+            if (selectedRating === 0) {
+                removeHighlight();
+            } else {
+                highlightStars(selectedRating);
+            }
+        });
+
+        star.addEventListener('click', () => {
+            selectedRating = star.getAttribute('data-value');
+            highlightStars(selectedRating);
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            const value = star.getAttribute('data-value');
+            if (value <= rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+
+    function removeHighlight() {
+        stars.forEach(star => {
+            star.classList.remove('active');
+        });
+    }
+</script>
 
 </body>
 </html>
